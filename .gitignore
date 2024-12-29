@@ -1,0 +1,3 @@
+# purposely ignore these files
+backend/node_modules/
+backend/.env
