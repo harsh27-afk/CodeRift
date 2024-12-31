@@ -1,6 +1,7 @@
 
 import express from "express"
 import morgan from "morgan"
+import cookieParser from "cookie-parser"
 import connect from "./db/db.js"
 import userRoutes from "./routes/user.route.js"
 
@@ -12,6 +13,7 @@ connect();
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+app.use(cookieParser())
 
 app.use("/users",userRoutes)
 

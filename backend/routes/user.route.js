@@ -3,6 +3,7 @@ import * as userController from "../controllers/user.controller.js"
 // if theres a lot of named import from a file use above * method instead of manually listing all functions in { }
 
 import { body } from 'express-validator';
+import * as authMiddleware from "../middlewares/auth.middleware.js";
 
 
 
@@ -19,6 +20,8 @@ router.post("/login",
     body('email').isEmail().withMessage("email must be a valid email address"),
     body('password').isLength({min:6}).withMessage("email must be atleast 6 character long"),
     userController.loginUserController);
+
+router.get("/profile", authMiddleware.authUser, userController.profileController)
 
 export default router;
 
