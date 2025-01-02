@@ -14,7 +14,10 @@ export const createUserController=async(req,res)=>{
 
         // generate JWT token to make user logged in after registration
         const token = await user.generateJWT()
-        res.status(201).json({user,token})
+
+        // delete the password from the user object so that it is not sent back to the frontend
+        delete user._doc.password
+        res.status(201).json({user})
     }
     catch(e){
         res.status(400).json({message:e.message})
@@ -34,7 +37,8 @@ export const loginUserController = async (req, res) => {
 
         // generate JWT token to make user logged in after registration
         const token = await user.generateJWT();
-        console.log("u have arrived here")
+        
+        delete user._doc.password;
         res.status(200).json({ user, token });
     } catch (e) {
         res.status(400).json({ message: e.message });
