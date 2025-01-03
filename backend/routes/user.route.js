@@ -1,29 +1,29 @@
-import {Router} from 'express'
-import * as userController from "../controllers/user.controller.js"
-// if theres a lot of named import from a file use above * method instead of manually listing all functions in { }
-
+import { Router } from 'express';
+import * as userController from '../controllers/user.controller.js';
 import { body } from 'express-validator';
-import * as authMiddleware from "../middlewares/auth.middleware.js";
+import * as authMiddleware from '../middleware/auth.middleware.js';
+
+const router = Router();
 
 
 
-// here we are creating an instance of Router class, so that we can use all the functions declared in the Router class
-const router=Router();
-
-router.post("/register",
-    body('email').isEmail().withMessage("email must be a valid email address"),
-    body('password').isLength({min:6}).withMessage("email must be atleast 6 character long"),
+router.post('/register',
+    body('email').isEmail().withMessage('Email must be a valid email address'),
+    body('password').isLength({ min: 3 }).withMessage('Password must be at least 3 characters long'),
     userController.createUserController);
- 
 
-router.post("/login",
-    body('email').isEmail().withMessage("email must be a valid email address"),
-    body('password').isLength({min:6}).withMessage("email must be atleast 6 character long"),
-    userController.loginUserController);
+router.post('/login',
+    body('email').isEmail().withMessage('Email must be a valid email address'),
+    body('password').isLength({ min: 3 }).withMessage('Password must be at least 3 characters long'),
+    userController.loginController);
 
-router.get("/profile", authMiddleware.authUser, userController.profileController)
+router.get('/profile', authMiddleware.authUser, userController.profileController);
 
-router.get("/logout", authMiddleware.authUser, userController.logoutController)
+
+router.get('/logout', authMiddleware.authUser, userController.logoutController);
+
+
+router.get('/all', authMiddleware.authUser, userController.getAllUsersController);
+
 
 export default router;
-
